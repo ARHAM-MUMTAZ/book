@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mumtaz Ink Co. | Leading Offset Printing Ink Manufacturer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Palette - Based on Design System 001 + Image Reference */
+            --c-black: #0A0A0A;
+            --c-white: #FFFFFF;
+            --c-offwhite: #F4F4F4;
+            --c-midgray: #D0D0D0;
+            --c-darkgray: #555555;
+            --c-card-dark: #111111;
+            --c-border-dark: #2A2A2A;
+            
+            /* CMYK Accents (Used for UI accents, not text) */
+            --c-cyan: #00FFFF;
+            --c-magenta: #FF00FF;
+            --c-yellow: #FFFF00;
+            --c-key: #000000;
+
+            /* Fonts */
+            --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+            --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+            /* Type Scale */
+            --fs-hero: clamp(3.5rem, 10vw, 7.5rem);
+            --fs-cover: clamp(2.2rem, 6vw, 4rem);
+            --fs-display: clamp(1.8rem, 4vw, 3rem);
+            --fs-h1: 2.5rem;
+            --fs-h2: 1.8rem;
+            --fs-h3: 1.25rem;
+            --fs-stat: clamp(2.5rem, 5vw, 4rem);
+            --fs-body: 1rem;
+            --fs-body-lg: 1.125rem;
+            --fs-small: 0.875rem;
+            --fs-label: 0.75rem;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-s: 8px;
+            --space-m: 16px;
+            --space-l: 24px;
+            --space-xl: 40px;
+            --space-2xl: 80px;
+            --page-max: 1200px;
+            --gutter: clamp(1.5rem, 5vw, 4rem);
+        }
+
+        /* Base Reset */
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
+        body {
+            background-color: var(--c-black);
+            color: var(--c-white); /* Mandatory: All fonts white */
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography Override for White Text Constraint */
+        h1, h2, h3, h4, p, span, a, div, li {
+            color: var(--c-white) !important;
+        }
+
+        h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0 0 var(--space-m); }
+        p { margin-bottom: var(--space-l); max-width: 72ch; }
+
+        /* Layout Components */
+        .container {
+            max-width: var(--page-max);
+            margin-inline: auto;
+            padding-inline: var(--gutter);
+        }
+
+        section {
+            padding-block: clamp(60px, 10vw, 120px);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--c-border-dark);
+        }
+
+        .nav-inner {
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--c-white);
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C12 2 4 10 4 15.5C4 19.1 6.9 22 10.5 22C14.1 22 17 19.1 17 15.5C17 14.5 16.7 13.5 16.2 12.6L12 2Z'/%3E%3C/svg%3E") no-repeat center;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C12 2 4 10 4 15.5C4 19.1 6.9 22 10.5 22C14.1 22 17 19.1 17 15.5C17 14.5 16.7 13.5 16.2 12.6L12 2Z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-l);
+        }
+
+        .nav-links a {
+            font-size: var(--fs-label);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover { opacity: 0.6; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+            background: radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1), transparent 40%),
+                        radial-gradient(circle at 20% 80%, rgba(255, 0, 255, 0.1), transparent 40%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: var(--fs-hero);
+            margin-bottom: var(--space-l);
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            border-radius: 20px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            max-width: 100%;
+        }
+
+        .floating-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--c-white);
+            padding: var(--space-l);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .floating-badge span, .floating-badge h4 { color: var(--c-black) !important; }
+
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-content h1 { font-size: var(--fs-cover); }
+            .hero-image { order: -1; }
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: var(--c-card-dark);
+            border-block: 1px solid var(--c-border-dark);
+            padding-block: var(--space-xl);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-xl);
+            text-align: center;
+        }
+
+        .stat-item h2 { font-size: var(--fs-stat); margin: 0; }
+        .stat-item p { font-size: var(--fs-label); text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; margin: 0; }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-l); }
+        }
+
+        /* Products Grid */
+        .section-header {
+            margin-bottom: var(--space-2xl);
+            max-width: 800px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
+            gap: var(--space-l);
+        }
+
+        .product-card {
+            background: var(--c-card-dark);
+            border: 1px solid var(--c-border-dark);
+            padding: var(--space-xl);
+            border-radius: 16px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-m);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--c-darkgray);
+        }
+
+        .product-card h3 { font-size: var(--fs-h2); border-left: 4px solid var(--c-white); padding-left: var(--space-m); }
+        
+        .cmyk-indicator {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: var(--space-m);
+        }
+
+        .cmyk-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-c { background: var(--c-cyan); }
+        .dot-m { background: var(--c-magenta); }
+        .dot-y { background: var(--c-yellow); }
+        .dot-k { background: var(--c-white); }
+
+        /* Quality Section */
+        .quality-section {
+            background: var(--c-offwhite);
+        }
+        
+        .quality-section h2, .quality-section p, .quality-section h3, .quality-section li {
+            color: var(--c-black) !important;
+        }
+
+        .quality-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: var(--space-2xl);
+            align-items: center;
+        }
+
+        .quality-visual {
+            background: var(--c-black);
+            padding: var(--space-2xl);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .quality-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+        }
+
+        .quality-item h3 { margin-bottom: var(--space-s); }
+
+        @media (max-width: 768px) {
+            .quality-grid { grid-template-columns: 1fr; }
+            .quality-list { grid-template-columns: 1fr; }
+        }
+
+        /* Clientele */
+        .clientele-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-xl);
+        }
+
+        .client-box {
+            padding: var(--space-xl);
+            border-top: 1px solid var(--c-border-dark);
+        }
+
+        .client-box h3 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        @media (max-width: 768px) {
+            .clientele-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Footer / Contact */
+        footer {
+            background: #000;
+            padding-block: var(--space-2xl);
+            border-top: 1px solid var(--c-border-dark);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: var(--space-2xl);
+        }
+
+        .footer-brand h2 { font-size: 2.5rem; }
+        .contact-info h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.5; margin-bottom: var(--space-l); }
+        .contact-info p { margin-bottom: 4px; font-size: 1.125rem; }
+
+        .address-box {
+            font-style: normal;
+        }
+
+        .bottom-bar {
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--c-border-dark);
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--fs-label);
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
+            .bottom-bar { flex-direction: column; gap: var(--space-m); text-align: center; }
+        }
+
+        /* Decorative Splashes */
+        .splash-svg {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .interactive-mixer {
+            margin-top: var(--space-xl);
+            padding: var(--space-l);
+            background: #1a1a1a;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mixer-controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .color-btn {
+            flex: 1;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .color-btn:active { transform: scale(0.95); }
+        .btn-c { background: var(--c-cyan); color: #000 !important; }
+        .btn-m { background: var(--c-magenta); color: #000 !important; }
+        .btn-y { background: var(--c-yellow); color: #000 !important; }
+        .btn-k { background: #333; color: #fff !important; }
+
+        .mixer-display {
+            height: 100px;
+            border-radius: 8px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-inner">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                MUMTAZ INK CO.
+            </div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#products">Products</a>
+                <a href="#quality">Quality</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <p class="accent" style="text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: var(--space-m);">EST. 1981 • KARACHI</p>
+                        <h1>Brilliance in Every Batch.</h1>
+                        <p style="font-size: var(--fs-body-lg);">Mumtaz Ink Co. is a leading offset printing ink manufacturer, combining decades of industrial expertise with modern pigment technology.</p>
+                        <div class="interactive-mixer">
+                            <div class="mixer-controls">
+                                <button class="color-btn btn-c" onclick="mix('Cyan')">Cyan</button>
+                                <button class="color-btn btn-m" onclick="mix('Magenta')">Magenta</button>
+                                <button class="color-btn btn-y" onclick="mix('Yellow')">Yellow</button>
+                                <button class="color-btn btn-k" onclick="mix('Black')">Black</button>
+                            </div>
+                            <div id="mixerDisplay" class="mixer-display">SELECT A SHADE TO PREVIEW INK DENSITY</div>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://editors-cdn.template.net/ebb4b33d5c334-abdd251d-2394-4494-ac8c-9913e272aecc.jpeg" alt="Mumtaz Ink Brochure Visualization">
+                        <div class="floating-badge">
+                            <h4>45+ YEARS</h4>
+                            <span>OF EXCELLENCE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="container stats-grid">
+                <div class="stat-item">
+                    <h2>1981</h2>
+                    <p>Founded</p>
+                </div>
+                <div class="stat-item">
+                    <h2>ISO</h2>
+                    <p>Certified</p>
+                </div>
+                <div class="stat-item">
+                    <h2>100%</h2>
+                    <p>Batch Tested</p>
+                </div>
+                <div class="stat-item">
+                    <h2>RRR</h2>
+                    <p>Grade Series</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <section id="about">
+            <div class="container">
+                <div class="section-header">
+                    <p class="accent" style="text-transform: uppercase; letter-spacing: 0.2em;">Executive Summary</p>
+                    <h2 style="font-size: var(--fs-display);">Built on Precision Formulation.</h2>
+                    <p style="font-size: var(--fs-body-lg);">Founded over four and a half decades ago in Karachi, Mumtaz Ink Co. has established itself as a trusted name in the ink manufacturing industry. Built on continuous innovation and rigorous quality standards, we deliver high-performance ink solutions tailored for offset press requirements.</p>
+                    <p>Under CEO <strong>Arham bin Mumtaz's</strong> leadership, the company meets the rigorous demands of high-speed commercial presses, packaging converters, and educational publication houses across Pakistan.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products -->
+        <section id="products" style="background: #050505;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 style="font-size: var(--fs-display);">Core Product Offerings</h2>
+                    <p>Engineered for high-speed performance and chromatic accuracy.</p>
+                </div>
+                
+                <div class="products-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <h3>Flagship #1 Offset Black</h3>
+                        <p>Signature high-density black ink formulated for deep jetness and crisp line sharpness. Features fast setting times, minimal rub-off, and superior runnability on high-speed presses.</p>
+                        <div class="cmyk-indicator">
+                            <div class="cmyk-dot dot-k"></div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <h3>High-Performance CMYK Process Series (RRR Grade)</h3>
+                        <p>Precision-balanced four-color process inks for vibrant, color-accurate reproduction. Includes Cyan, Magenta, Yellow, and Bronze Red shades providing superior transparency and high gloss.</p>
+                        <div class="cmyk-indicator">
+                            <div class="cmyk-dot dot-c"></div>
+                            <div class="cmyk-dot dot-m"></div>
+                            <div class="cmyk-dot dot-y"></div>
+                            <div class="cmyk-dot dot-k"></div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <h3>Korean Addition Series (MPI Korean Line)</h3>
+                        <p>Enhanced formulations using imported Korean additives and pigments for specialized performance. Superior chemical resistance, enhanced lightfastness, and exceptional gloss for demanding substrates.</p>
+                        <div class="cmyk-indicator">
+                            <div style="font-size: 10px; font-weight: 700; border: 1px solid var(--c-white); padding: 2px 8px; border-radius: 4px;">PREMIUM GRADE</div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <h3>Rotary News Press Inks</h3>
+                        <p>Heavy-duty, high-volume inks engineered for coldset and heatset rotary web offset presses. Low misting at high speeds and immediate absorption on newsprint.</p>
+                        <div class="cmyk-indicator">
+                            <div style="font-size: 10px; font-weight: 700; border: 1px solid var(--c-white); padding: 2px 8px; border-radius: 4px;">HIGH VOLUME</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quality Assurance -->
+        <section id="quality" class="quality-section">
+            <div class="container">
+                <div class="quality-grid">
+                    <div class="quality-visual">
+                        <div class="logo-icon" style="mask-size: contain; background: var(--c-white); width: 80px; height: 80px; margin-bottom: var(--space-l);"></div>
+                        <h3>Certified Lab Standards</h3>
+                        <p style="opacity: 0.7;">Every batch is evaluated for consistency matching international standards.</p>
+                    </div>
+                    <div>
+                        <h2 style="font-size: var(--fs-display);">Quality Assurance & Testing</h2>
+                        <p>Our in-house laboratory ensures that every liter of ink produced meets the mechanical and aesthetic needs of modern printing houses.</p>
+                        <div class="quality-list">
+                            <div class="quality-item">
+                                <h3>Tack & Viscosity</h3>
+                                <p>Analysis of flow and resistance to ensure smooth ink transfer across rollers.</p>
+                            </div>
+                            <div class="quality-item">
+                                <h3>Drying Properties</h3>
+                                <p>Rigorous testing of setting times on various substrates to prevent smudging.</p>
+                            </div>
+                            <div class="quality-item">
+                                <h3>Gloss Verification</h3>
+                                <p>Ensuring the final print achieves the intended finish and reflectivity.</p>
+                            </div>
+                            <div class="quality-item">
+                                <h3>Pigment Stability</h3>
+                                <p>Evaluating color retention and resistance to chemical fading.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Markets -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <h2 style="font-size: var(--fs-display);">Key Markets & Clientele</h2>
+                </div>
+                <div class="clientele-grid">
+                    <div class="client-box">
+                        <h3>Educational Textbook Boards</h3>
+                        <p>Providing high-volume, reliable inks for nationwide curriculum printing and academic publications.</p>
+                    </div>
+                    <div class="client-box">
+                        <h3>Packaging & Converting</h3>
+                        <p>Specialized formulations for folding cartons, consumer goods packaging, and premium label stock.</p>
+                    </div>
+                    <div class="client-box">
+                        <h3>Commercial Presses</h3>
+                        <p>Supplying major offset printing houses for magazines, promotional materials, and corporate collateral.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <footer id="contact">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <h2>Mumtaz Ink Co.</h2>
+                        <p style="max-width: 40ch; opacity: 0.7;">Your partner in precision offset printing since 1981. Manufacturing excellence from the heart of Karachi.</p>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Headquarters</h3>
+                        <address class="address-box">
+                            <p>Sher Shah, Karachi,</p>
+                            <p>Sindh, Pakistan</p>
+                        </address>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Business Inquiries</h3>
+                        <p><strong>Arham bin Mumtaz</strong></p>
+                        <p>Chief Executive Officer</p>
+                        <p style="margin-top: var(--space-m);">+92 300 9233490</p>
+                        <p>+92 304 6369635</p>
+                    </div>
+                </div>
+                <div class="bottom-bar">
+                    <div>© 2026 Mumtaz Ink Co. All Rights Reserved.</div>
+                    <div>Designed with Precision.</div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Simple Interactive Ink Mixer Logic
+        const mixerDisplay = document.getElementById('mixerDisplay');
+        const colors = {
+            'Cyan': { bg: '#00FFFF', text: '#000', msg: 'CYAN: High Transparency, RRR Grade' },
+            'Magenta': { bg: '#FF00FF', text: '#000', msg: 'MAGENTA: Exceptional Dot Reproduction' },
+            'Yellow': { bg: '#FFFF00', text: '#000', msg: 'YELLOW: Wide Color Gamut' },
+            'Black': { bg: '#111111', text: '#FFF', msg: 'BLACK: Signature High-Density Jetness' }
+        };
+
+        function mix(color) {
+            const data = colors[color];
+            mixerDisplay.style.backgroundColor = data.bg;
+            mixerDisplay.style.color = data.text + ' !important';
+            mixerDisplay.innerHTML = `<span style="color:${data.text} !important">${data.msg}</span>`;
+            
+            // Add a small animation effect
+            mixerDisplay.style.transition = 'none';
+            mixerDisplay.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                mixerDisplay.style.transition = 'all 0.3s ease';
+                mixerDisplay.style.transform = 'scale(1)';
+            }, 50);
+        }
+
+        // Simple scroll reveal
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card, .client-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
